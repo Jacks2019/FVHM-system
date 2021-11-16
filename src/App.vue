@@ -1,6 +1,6 @@
 <template>
   <div >
-    <title>界首市阀栓管理系统</title>
+    <title>界首市阀栓管理系统</title>//ts
     <el-container class="whole-container">
       <el-header height="80px">
         <layer-header></layer-header>
