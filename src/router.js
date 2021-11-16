@@ -41,54 +41,16 @@ const configs = [
     icon: 'el-icon-map-location',
     name: 'manage',
     hide: true,
-    component: Manage,
+    component: Manage
   },
   {
     path: '/manage/edit',
     label: '用户类型权限管理',
     icon: 'el-icon-map-location',
     name: 'manageEdit',
-    hide: true,
-    component: EditFunction,
+    component: EditFunction
   }
 ];
-
-// const configs = [
-//   {
-//     path: '/', // 路由地址，children 内路由地址 = 上一嵌套的路由地址（若无则为""） + 该path
-//     label: '首页', // 【必选】显示在菜单栏里的名字
-//     name: 'one', // 【必选】一定要有，且保证在 configs 内唯一
-//     icon: 'el-icon-s-comment', // 显示在菜单栏内的 icon
-//     component: Example1 // 页面组件
-//   },
-//   {
-//     label: '监测信息',
-//     icon: 'el-icon-message',
-//     name: 'second',
-//     expanded: true, // 子菜单默认是否展开
-//     children: [
-//       {
-//         path: '/g',
-//         label: '二页',
-//         name: 'three',
-//         component: Example2
-//       },
-//       {
-//         path: '/y',
-//         label: '三页',
-//         name: 'four',
-//         hide: true,
-//         component: Example3
-//       },
-//       {
-//         path: '/p',
-//         label: '四页',
-//         name: 'five',
-//         component: Example4
-//       },
-//     ]
-//   },
-// ];
 
 const generateRouterConfigsFunc = (res, configs, { rootPath = '' }) => {
   configs.forEach(item => {
@@ -124,7 +86,7 @@ const generateMenuConfigsFunc = (res, configs, { rootPath = '' }) => {
         index: path,
       });
     }
-  }) 
+  })
 }
 
 const generateMenuExpandedConfigsFunc = (res, configs) => {

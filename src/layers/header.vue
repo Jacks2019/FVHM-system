@@ -13,7 +13,7 @@
 
   const router = useRouter();
   const goManage = () => {
-    router.push('manage');
+    router.push('/manage')
   }
   
 </script>
