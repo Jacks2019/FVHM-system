@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Example1 from '@/pages/example1.vue';
+import homepage from '@/pages/homepage.vue';
 import Example2 from '@/pages/example2.vue';
 import Example3 from '@/pages/example3.vue';
 import Example4 from '@/pages/example4.vue';
@@ -12,7 +12,7 @@ const configs = [
     label: '首页', // 【必选】显示在菜单栏里的名字
     name: 'one', // 【必选】一定要有，且保证在 configs 内唯一
     icon: 'el-icon-s-comment', // 显示在菜单栏内的 icon
-    component: Example1 // 页面组件
+    component: homepage // 页面组件
   },
   {
     path: '/a',
