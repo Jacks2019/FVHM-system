@@ -1,6 +1,6 @@
 <template>
   <div class="water">
-    <el-row :gutter="20" style="margin-top: -15px">
+    <el-row :gutter="20" style="margin-top: -40px">
       <el-col :span="4" style="padding: 10px"
         ><white-block style="width:200 px;height:310px;"><wells-count></wells-count></white-block
       ></el-col>
@@ -28,10 +28,10 @@
 <script setup>
   import wellsCount from '../components/wellsCount.vue'
   import hydrantCount from '../components/hydrantCount.vue'
-  // import waterConsume from '../components/waterConsume.vue'
+  import waterConsume from '../components/waterConsume.vue'
   import useRank from '../components/useRank.vue'
-  // import valveDistribution from '../components/waterBarPic.vue'//阀门分布
-  // import hydrantDistribution from '../components/waterLinePic.vue'//消防栓分布
+  import valveDistribution from '../components/waterBarPic.vue'//阀门分布
+  import hydrantDistribution from '../components/waterLinePic.vue'//消防栓分布
   import whiteBlock from '../components/whiteBlock.vue'
 </script>
 

@@ -2,16 +2,6 @@
   <div class="home">
     <div class="home-top">
       <div class="home-top-title">消防栓分布</div>
-      <div>
-        <el-date-picker
-          v-model="currentYear"
-          type="year"
-          placeholder="选择年份"
-          format="YYYY 年"
-          @change="search"
-          :disabled-date="disableDate"
-        ></el-date-picker>
-      </div>
     </div>
     <div class="home-body" id="water-line"></div>
   </div>
@@ -20,53 +10,41 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
   import * as echarts from 'echarts'
-  import { fetchMounthCostByYear } from '../../apis/2.0/home'
-  let counts = ref([])
+  import { fetchDis } from '../apis/2.0/home'
+  import { mountedToArrPrototype, nameGenerator, replaceEach } from '../mock'
+
+  let citys = ref([])
+  let consumption = ref([])
   let currentYear = ref(new Date())
 
   let myChart
-  let linePic = function (yValues) {
-    const lineDom = document.getElementById('water-line')
-    myChart = echarts.init(lineDom)
-    let option
-    option = {
+  let BarPic = function (xValues, yValues) {
+    mountedToArrPrototype()
+    let chartDom = document.getElementById('water-line')
+    myChart = echarts.init(chartDom)
+    let coloredY = []
+    const colors = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+    for (let i = 0; i < yValues.length; i++) {
+      let str = '#'
+      let random = 0
+      for (let j = 0; j < 6; j++) {
+        random = parseInt(Math.random() * 16)
+        str += colors[random]
+      }
+      coloredY.push({
+        value: yValues[i],
+        xvalue: xValues[i],
+        itemStyle: { color: str },
+      })
+    }
+    let option = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow',
+          // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
         },
       },
-      xAxis: {
-        name: '道路',
-        type: 'category',
-        data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((_, idx) => idx + 1 + '路'),
-        axisTick: {
-          alignWithLabel: true,
-        },
-      },
-      yAxis: {
-        type: 'value',
-      },
-      legend: {
-        data: [yValues[0].name, yValues[1].name, yValues[2].name],
-      },
-      series: [
-        {
-          //name: yValues[0].name,
-          data: yValues[0].value,
-          type: 'bar',
-        },
-        // {
-        //   name: yValues[1].name,
-        //   data: yValues[1].value,
-        //   type: 'line',
-        // },
-        // {
-        //   name: yValues[2].name,
-        //   data: yValues[2].value,
-        //   type: 'line',
-        // },
-      ],
       grid: {
         top: '10%',
         left: '3%',
@@ -74,8 +52,33 @@
         bottom: '10%',
         containLabel: true,
       },
+      xAxis: [
+        {
+          name: '道路',
+          type: 'category',
+          // data: xValues.replaceEach(nameGenerator),
+          data: xValues,
+          axisTick: {
+            alignWithLabel: true,
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          interval:1,
+        },
+      ],
+      series: [
+        {
+          name: '分布数量',
+          type: 'bar',
+          data: coloredY,
+          barWidth: 40,
+        },
+      ],
     }
-    if (true) {
+    if (xValues.length > 8) {
       option.dataZoom = [
         {
           show: true,
@@ -104,35 +107,12 @@
   }
 
   const search = async () => {
-    const current = currentYear.value.getFullYear()
-    const res1 = await fetchMounthCostByYear({ year: current })
-    const res2 = await fetchMounthCostByYear({ year: current - 1 })
-    const res3 = await fetchMounthCostByYear({ year: current - 2 })
-    let r1 = []
-    let r2 = []
-    let r3 = []
-    if (res1.code === '200' && res2.code === '200' && res3.code === '200') {
-      let g = []
-      r1 = res1.data.map(item => item.volume)
-      r2 = res2.data.map(item => item.volume)
-      r3 = res3.data.map(item => item.volume)
-      const r = [
-        {
-          name: current + ' 年',
-          value: r1,
-        },
-        {
-          name: current - 1 + ' 年',
-          value: r2,
-        },
-        {
-          name: current - 2 + ' 年',
-          value: r3,
-        },
-      ]
-      counts.value = r
-      linePic(counts.value)
+    const res = await fetchDis({ valveType: 2 })
+    if (res.code === '200') {
+      citys.value = res.data.map(item => item.roadName)
+      consumption.value = res.data.map(item => item.valveCounts)
     }
+    BarPic(citys.value, consumption.value)
   }
 
   onMounted(async () => {
@@ -166,12 +146,5 @@
       height: 330px;
       width: 100%;
     }
-  }
-</style>
-<style>
-  .home-top .el-input__inner {
-    color: rgb(1, 82, 47);
-    font-weight: 700;
-    font-size: 14px;
   }
 </style>

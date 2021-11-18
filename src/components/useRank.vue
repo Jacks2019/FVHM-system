@@ -13,7 +13,7 @@
         :row-style="{ height: '42px' }"
         :cell-style="{ padding: '0px', fontSize: '14px' }"
       >
-        <el-table-column prop="applicantName" label="道路名称"> </el-table-column>
+        <el-table-column prop="roadName" label="道路名称"> </el-table-column>
         <el-table-column prop="volume" width="160" label="用水量(万m³)"> </el-table-column>
       </el-table>
     </div>
@@ -30,7 +30,6 @@
         :header-cell-style="{ height: '22px', padding: '2px', fontWeight: 'bold' }"
       >
         <el-table-column min-width="1" align="center" prop="well" label="道路名称"> </el-table-column>
-        <!-- <el-table-column sortable min-width="2.5" align="center" prop="time" label="监测时间"> </el-table-column> -->
         <el-table-column sortable min-width="2" align="center" prop="consume" label="用水量(万m³)"> </el-table-column>
       </el-table>
     </div>
@@ -40,18 +39,18 @@
 <script setup>
   import { number } from 'echarts'
   import { ref, onMounted } from 'vue'
-  // import { fetchCostRank } from '../../apis/2.0/home.js'
-  // import { addAttrToEach, mountedToArrPrototype, nameGenerator } from '../../mock'
+  import { fetchCostRank } from '../apis/2.0/home.js'
+  import { addAttrToEach, mountedToArrPrototype, nameGenerator } from '../mock'
   let tableData = ref([])
   let dialogVisible = ref(false)
 
-  // onMounted(async () => {
-  //   mountedToArrPrototype()
-  //   let res = await fetchCostRank({ year: new Date().getFullYear() })
-  //   if (res.code === '200') {
-  //     tableData.value = res.data;
-  //   }
-  // })
+  onMounted(async () => {
+    mountedToArrPrototype()
+    let res = await fetchCostRank({ year: new Date().getFullYear() })
+    if (res.code === '200') {
+      tableData.value = res.data;
+    }
+  })
 </script>
 
 <style lang="scss" scoped>

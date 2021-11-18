@@ -31,7 +31,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  // import { fetchInstalled } from '../../apis/statistics'
+  import { fetchInstalledWell } from '../apis/statistics'
 
   const counts = ref({
     total: 0,
@@ -39,13 +39,13 @@
     unInstallCounts: 0,
   })
 
-  // onMounted(async () => {
-  //   const res = await fetchInstalled()
-  //   console.log('message', res.message)
-  //   if (res.code === '200') {
-  //     counts.value = res.data
-  //   }
-  // })
+  onMounted(async () => {
+    const res = await fetchInstalledWell()
+    console.log('message', res.message)
+    if (res.code === '200') {
+      counts.value = res.data
+    }
+  })
 </script>
 
 <style lang="scss" scoped>

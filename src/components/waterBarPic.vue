@@ -2,17 +2,7 @@
   <div class="home">
     <div class="home-top">
       <div class="home-top-title">阀门分布</div>
-      <div>
-        <el-date-picker
-          v-model="currentYear"
-          type="year"
-          placeholder="选择年份"
-          format="YYYY 年"
-          @change="search"
-          :disabled-date="disableDate"
-        >
-        </el-date-picker>
-      </div>
+      
     </div>
     <div class="home-body" id="water-bar"></div>
   </div>
@@ -21,8 +11,8 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
   import * as echarts from 'echarts'
-  import { fetchWaterCostByYear } from '../../apis/2.0/home'
-  import { mountedToArrPrototype, nameGenerator, replaceEach } from '../../mock'
+  import { fetchDis } from '../apis/2.0/home'
+  import { mountedToArrPrototype, nameGenerator, replaceEach } from '../mock'
 
   let citys = ref([])
   let consumption = ref([])
@@ -76,11 +66,12 @@
       yAxis: [
         {
           type: 'value',
+          interval:1,
         },
       ],
       series: [
         {
-          name: currentYear.value.getFullYear() + '年度用水量',
+          name: '分布数量',
           type: 'bar',
           data: coloredY,
           barWidth: 40,
@@ -116,31 +107,16 @@
   }
 
   const search = async () => {
-    const res = await fetchWaterCostByYear({ year: currentYear.value.getFullYear() })
+    const res = await fetchDis({ valveType: 1 })
     if (res.code === '200') {
-      citys.value = res.data.map(item => item.applicantName)
-      consumption.value = res.data.map(item => item.volume)
+      citys.value = res.data.map(item => item.roadName)
+      consumption.value = res.data.map(item => item.valveCounts)
     }
     BarPic(citys.value, consumption.value)
   }
 
   onMounted(async () => {
     search()
-    // let res1 = await fetchWaterCostByYear({ year: 2021 })
-    // let res2 = await fetchWaterCostByYear({ year: 2020 })
-    // if (res1.code === '200') {
-    //   for (let i = 0; i < res1.data.length; i++) {
-    //     citys.value[0].push(res1.data[i].place)
-    //     consumption.value[0].push(res1.data[i].volume)
-    //   }
-    // }
-    // if (res2.code === '200') {
-    //   for (let i = 0; i < res2.data.length; i++) {
-    //     citys.value[1].push(res2.data[i].place)
-    //     consumption.value[1].push(res2.data[i].volume)
-    //   }
-    // }
-    // BarPic(citys.value[0], consumption.value[0])
   })
   onUnmounted(() => {
     if (myChart) {
