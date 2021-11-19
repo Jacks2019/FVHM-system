@@ -6,7 +6,7 @@
         <layer-header></layer-header>
       </el-header>
 
-      <el-container>
+      <el-container id="center-container">
         <el-aside width="200px">
           <layer-aside></layer-aside>
         </el-aside>
@@ -59,7 +59,9 @@ import LayerAside from '@/layers/aside.vue';
   z-index: 2000;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
 }
-
+#center-container{
+  margin-top: -10px;
+}
 .el-container {
   height: 100%;
   position: relative;

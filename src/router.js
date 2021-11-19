@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import homepage from '@/pages/homepage.vue';
-import Example2 from '@/pages/example2.vue';
+import MapContent from '@/pages/mapcontent.vue';
 import Example3 from '@/pages/example3.vue';
 import Example4 from '@/pages/example4.vue';
 import EditFunction from '@/pages/EditFunction.vue';
@@ -23,7 +23,7 @@ const configs = [
       {
         path:'/content',
         label:'内容',
-        component: Example2
+        component: MapContent
       },
       {
         path:'/detail',
@@ -31,7 +31,91 @@ const configs = [
         component: Example3
       }
     ]
-  }
+  },
+  {
+    path: '/valve_plug_information',
+    label: '阀栓信息',
+    name: 'valve_plug_information',
+    icon: '',
+    component: ""
+  },
+  {
+    path: '/alarm_management',
+    label: '报警管理',
+    name: 'alarm_management',
+    icon: '',
+    component: ""
+  },
+  {
+    path: '/comprehensive_statistics',
+    label: '综合统计',
+    name: 'comprehensive_statistics',
+    icon: '',
+    component: ""
+  },
+  {
+    path: '/water_consumption_statistics',
+    label: '用水统计',
+    name: 'water_consumption_statistics',
+    icon: '',
+    component: ""
+  },
+  {
+    path: '/water_consumption_statistics',
+    label: '统计报表',
+    name: 'water_consumption_statistics',
+    icon: '',
+    children: [
+      {
+        path:'/district',
+        label:'区县',
+        component: ""
+      },
+      {
+        path:'/township',
+        label:'乡镇',
+        component: ""
+      },
+      {
+        path:'/village',
+        label:'村庄',
+        component: ""
+      },
+      {
+        path:'/industrial_area',
+        label:'工业区',
+        component: ""
+      },
+    ]
+  },
+  {
+    path: '/system_management',
+    label: '系统管理',
+    name: 'system_management',
+    icon: '',
+    children: [
+      {
+        path:'/user_anagement',
+        label:'用户管理',
+        component: ""
+      },
+      {
+        path:'/job_management',
+            label:'岗位管理',
+          component: ""
+      },
+      {
+        path:'/menu_management',
+        label:'菜单管理',
+        component: ""
+      },
+      {
+        path:'/api_management',
+        label:'API管理',
+        component: ""
+      }
+    ]
+  },
 ];
 
 const generateRouterConfigsFunc = (res, configs, { rootPath = '' }) => {
