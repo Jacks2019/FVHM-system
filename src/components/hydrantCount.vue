@@ -6,24 +6,21 @@
     <div class="content">
       <div class="sum">
         <div style="text-align: center">
-          <!-- <span class="number">{{ counts.total }}</span> -->
-          <span class="number">66</span>
+          <span class="number">{{ counts.total }}</span>
           <span>个</span>
           <span class="explain middle">(安装总量)</span>
         </div>
       </div>
       <div class="finish">
         <div style="text-align: center">
-          <!-- <span class="number">{{ counts.installedCounts }}</span> -->
-          <span class="number">66</span>
+          <span class="number">{{ counts.installedCounts }}</span>
           <span>个</span>
           <span class="explain middle">(已安装)</span>
         </div>
       </div>
       <div class="finish">
         <div style="text-align: center">
-          <!-- <span class="number">{{ counts.unInstallCounts }}</span> -->
-          <span class="number">66</span>
+          <span class="number">{{ counts.unInstallCounts }}</span>
           <span>个</span>
           <span class="explain middle">(未安装)</span>
         </div>
@@ -34,7 +31,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  // import { fetchInstalled } from '../../apis/statistics'
+  import { fetchInstalledHydrant } from '../apis/statistics'
 
   const counts = ref({
     total: 0,
@@ -42,13 +39,13 @@
     unInstallCounts: 0,
   })
 
-  // onMounted(async () => {
-  //   const res = await fetchInstalled()
-  //   console.log('message', res.message)
-  //   if (res.code === '200') {
-  //     counts.value = res.data
-  //   }
-  // })
+  onMounted(async () => {
+    const res = await fetchInstalledHydrant()
+    console.log('message', res.message)
+    if (res.code === '200') {
+      counts.value = res.data
+    }
+  })
 </script>
 
 <style lang="scss" scoped>

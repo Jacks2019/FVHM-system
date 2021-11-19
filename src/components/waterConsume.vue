@@ -20,10 +20,9 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
   import * as echarts from 'echarts'
-  import { fetchMounthCostByYear } from '../../apis/2.0/home'
+  import { totalconsumedofyear } from '../apis/2.0/home'
   let counts = ref([])
   let currentYear = ref(new Date())
-
   let myChart
   let linePic = function (yValues) {
     const lineDom = document.getElementById('water-consume')
@@ -45,21 +44,16 @@
         data: ['阀门', '消防栓'],
       },
       series: [
-        // {
-        //   name: yValues[0].name,
-        //   data: yValues[0].value,
-        //   type: 'line',
-        // },
         {
         //   name: yValues[1].name,
           name: '阀门',
-          data: yValues[1].value,
+          data: yValues[0].value,
           type: 'line',
         },
         {
         //   name: yValues[2].name,
           name: '消防栓',
-          data: yValues[2].value,
+          data: yValues[1].value,
           type: 'line',
         },
       ],
@@ -80,29 +74,28 @@
 
   const search = async () => {
     const current = currentYear.value.getFullYear()
-    const res1 = await fetchMounthCostByYear({ year: current })
-    const res2 = await fetchMounthCostByYear({ year: current - 1 })
-    const res3 = await fetchMounthCostByYear({ year: current - 2 })
+    const res1 = await totalconsumedofyear({ 
+      year: current ,
+      valveType: 1,
+    })
+    const res2 = await totalconsumedofyear({ 
+      year: current ,
+      valveType: 2,
+    })
     let r1 = []
     let r2 = []
-    let r3 = []
-    if (res1.code === '200' && res2.code === '200' && res3.code === '200') {
+    if (res1.code === '200' && res2.code === '200') {
       let g = []
       r1 = res1.data.map(item => item.volume)
       r2 = res2.data.map(item => item.volume)
-      r3 = res3.data.map(item => item.volume)
       const r = [
         {
           name: current + ' 年',
           value: r1,
         },
         {
-          name: current - 1 + ' 年',
+          name: current  + ' 年',
           value: r2,
-        },
-        {
-          name: current - 2 + ' 年',
-          value: r3,
         },
       ]
       counts.value = r
