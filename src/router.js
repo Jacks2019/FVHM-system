@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import homepage from '@/pages/homepage.vue';
-import MapContent from '@/pages/mapcontent.vue';
-import Example3 from '@/pages/example3.vue';
-import Example4 from '@/pages/example4.vue';
-import EditFunction from '@/pages/EditFunction.vue';
-import Manage from '@/pages/manage.vue';
+import homepage from '@/pages/homePage/homepage.vue';
+import MapContent from '@/pages/Map/mapcontent.vue';
+import MapDetail from '@/pages/Map/mapdetail.vue';
+import AlarmMgmt from '@/pages/AlarmMgmt/alarmMgmt.vue'
+import VPInformation from '@/pages/ValvePlugInformation/valve_plug_information.vue'
+import async from "async";
 
-const configs = [
+
+ const configs = [
   {
     path: '/', // 路由地址，children 内路由地址 = 上一嵌套的路由地址（若无则为""） + 该path
     label: '首页', // 【必选】显示在菜单栏里的名字
@@ -28,7 +29,7 @@ const configs = [
       {
         path:'/detail',
         label:'详情',
-        component: Example3
+        component: MapDetail
       }
     ]
   },
@@ -37,14 +38,14 @@ const configs = [
     label: '阀栓信息',
     name: 'valve_plug_information',
     icon: '',
-    component: ""
+    component: VPInformation
   },
   {
     path: '/alarm_management',
     label: '报警管理',
     name: 'alarm_management',
     icon: '',
-    component: ""
+    component: AlarmMgmt
   },
   {
     path: '/comprehensive_statistics',

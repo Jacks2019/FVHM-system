@@ -26,13 +26,13 @@
 </template>
 
 <script setup>
-  import wellsCount from '../components/wellsCount.vue'
-  import hydrantCount from '../components/hydrantCount.vue'
-  import waterConsume from '../components/waterConsume.vue'
-  import useRank from '../components/useRank.vue'
-  import valveDistribution from '../components/waterBarPic.vue'//阀门分布
-  import hydrantDistribution from '../components/waterLinePic.vue'//消防栓分布
-  import whiteBlock from '../components/whiteBlock.vue'
+  import wellsCount from '../../components/wellsCount.vue'
+  import hydrantCount from '../../components/hydrantCount.vue'
+  import waterConsume from '../../components/waterConsume.vue'
+  import useRank from '../../components/useRank.vue'
+  import valveDistribution from '../../components/waterBarPic.vue'//阀门分布
+  import hydrantDistribution from '../../components/waterLinePic.vue'//消防栓分布
+  import whiteBlock from '../../components/whiteBlock.vue'
 </script>
 
 <style lang="scss" scoped>

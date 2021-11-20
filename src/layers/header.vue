@@ -4,7 +4,6 @@
       <img src='../assets/logo.png' alt='logo' />
       <p>水资源管理系统</p>
     </header>
-    <el-button plain @click="goManage" size="small">用户管理</el-button>
   </div>
 </template>
 
@@ -12,9 +11,6 @@
   import { useRouter, useRoute } from 'vue-router'
 
   const router = useRouter();
-  const goManage = () => {
-    router.push('/manage')
-  }
   
 </script>
 
