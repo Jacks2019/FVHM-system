@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+<<<<<<< HEAD
 import homepage from '@/pages/homepage.vue';
 import comprehensiveStatistics from '@/pages/comprehensiveStatistics.vue'
 import Example2 from '@/pages/example2.vue';
@@ -6,8 +7,17 @@ import Example3 from '@/pages/example3.vue';
 import Example4 from '@/pages/example4.vue';
 import EditFunction from '@/pages/EditFunction.vue';
 import Manage from '@/pages/manage.vue';
+=======
+import homepage from '@/pages/homePage/homepage.vue';
+import MapContent from '@/pages/Map/mapcontent.vue';
+import MapDetail from '@/pages/Map/mapdetail.vue';
+import AlarmMgmt from '@/pages/AlarmMgmt/alarmMgmt.vue'
+import VPInformation from '@/pages/ValvePlugInformation/valve_plug_information.vue'
+import async from "async";
+>>>>>>> 78f7fd77edb5e7124c45c1a95608d2f95f6333b3
 
-const configs = [
+
+ const configs = [
   {
     path: '/', // 路由地址，children 内路由地址 = 上一嵌套的路由地址（若无则为""） + 该path
     label: '首页', // 【必选】显示在菜单栏里的名字
@@ -24,15 +34,100 @@ const configs = [
       {
         path:'/content',
         label:'内容',
-        component: Example2
+        component: MapContent
       },
       {
         path:'/detail',
         label:'详情',
-        component: Example3
+        component: MapDetail
       }
     ]
   },
+  {
+    path: '/valve_plug_information',
+    label: '阀栓信息',
+    name: 'valve_plug_information',
+    icon: '',
+    component: VPInformation
+  },
+  {
+    path: '/alarm_management',
+    label: '报警管理',
+    name: 'alarm_management',
+    icon: '',
+    component: AlarmMgmt
+  },
+  {
+    path: '/comprehensive_statistics',
+    label: '综合统计',
+    name: 'comprehensive_statistics',
+    icon: '',
+    component: ""
+  },
+  {
+    path: '/water_consumption_statistics',
+    label: '用水统计',
+    name: 'water_consumption_statistics',
+    icon: '',
+    component: ""
+  },
+  {
+    path: '/water_consumption_statistics',
+    label: '统计报表',
+    name: 'water_consumption_statistics',
+    icon: '',
+    children: [
+      {
+        path:'/district',
+        label:'区县',
+        component: ""
+      },
+      {
+        path:'/township',
+        label:'乡镇',
+        component: ""
+      },
+      {
+        path:'/village',
+        label:'村庄',
+        component: ""
+      },
+      {
+        path:'/industrial_area',
+        label:'工业区',
+        component: ""
+      },
+    ]
+  },
+  {
+    path: '/system_management',
+    label: '系统管理',
+    name: 'system_management',
+    icon: '',
+    children: [
+      {
+        path:'/user_anagement',
+        label:'用户管理',
+        component: ""
+      },
+      {
+        path:'/job_management',
+            label:'岗位管理',
+          component: ""
+      },
+      {
+        path:'/menu_management',
+        label:'菜单管理',
+        component: ""
+      },
+      {
+        path:'/api_management',
+        label:'API管理',
+        component: ""
+      }
+    ]
+  },
+<<<<<<< HEAD
   {
     path: '/comprehensive', 
     label: '月度综合统计', 
@@ -40,6 +135,8 @@ const configs = [
     icon: 'el-icon-s-grid', 
     component: comprehensiveStatistics 
   }
+=======
+>>>>>>> 78f7fd77edb5e7124c45c1a95608d2f95f6333b3
 ];
 
 const generateRouterConfigsFunc = (res, configs, { rootPath = '' }) => {

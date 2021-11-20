@@ -6,7 +6,7 @@
         <layer-header></layer-header>
       </el-header>
 
-      <el-container>
+      <el-container class="center-container">
         <el-aside width="200px">
           <layer-aside></layer-aside>
         </el-aside>
@@ -30,6 +30,9 @@
 <script setup>
 import LayerHeader from '@/layers/header.vue';
 import LayerAside from '@/layers/aside.vue';
+import MapContent from '@/pages/Map/mapcontent.vue'
+import MapDetail from '@/pages/Map/mapdetail.vue'
+import MapLoader from '@/pages/Map/localMap.js'
 
 </script>
 
@@ -49,7 +52,10 @@ import LayerAside from '@/layers/aside.vue';
   position: relative;
   box-sizing: border-box;
 }
-
+.whole-container{
+  height: 100%;
+  overflow-y: hidden;
+}
 .el-header {
   position: fixed;
   top: 0;
@@ -59,16 +65,8 @@ import LayerAside from '@/layers/aside.vue';
   z-index: 2000;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
 }
-
-.el-container {
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
 .scroll-out {
-  margin: 10px 0;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 80px);
   width: 100%;
   overflow: hidden;
 }

@@ -45,13 +45,11 @@
       },
       series: [
         {
-        //   name: yValues[1].name,
           name: '阀门',
           data: yValues[0].value,
           type: 'line',
         },
         {
-        //   name: yValues[2].name,
           name: '消防栓',
           data: yValues[1].value,
           type: 'line',
