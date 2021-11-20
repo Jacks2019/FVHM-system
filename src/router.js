@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import homepage from '@/pages/homepage.vue';
+import comprehensiveStatistics from '@/pages/comprehensiveStatistics.vue'
 import Example2 from '@/pages/example2.vue';
 import Example3 from '@/pages/example3.vue';
 import Example4 from '@/pages/example4.vue';
@@ -31,6 +32,13 @@ const configs = [
         component: Example3
       }
     ]
+  },
+  {
+    path: '/comprehensive', 
+    label: '月度综合统计', 
+    name: 'comprehensiveStatistics', 
+    icon: 'el-icon-s-grid', 
+    component: comprehensiveStatistics 
   }
 ];
 
