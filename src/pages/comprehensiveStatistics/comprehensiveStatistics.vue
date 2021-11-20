@@ -1,7 +1,7 @@
 <template>
   <div class="p-page">
       <div class="p-header">
-      <div class="home-top-title">月度综合统计报表</div>
+      <p class="page-name">月度综合统计报表</p>
       <div class="op-flex">
             <div>
               <el-date-picker
@@ -57,8 +57,8 @@ let searchTimeType=ref('月')
   .op-flex {
     display: flex;
     position: relative;
-    top: -30px;
-    right: -1030px;
+    top: 0px;
+    right: -1000px;
     width: 150px;
     
   }
