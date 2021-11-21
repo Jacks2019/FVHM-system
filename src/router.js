@@ -44,7 +44,7 @@ import Manage from '@/pages/manage.vue';
     path: '/valve_plug_information',
     label: '阀栓信息',
     name: 'valve_plug_information',
-    icon: '',
+    icon: 'el-icon-document',
     component: VPInformation
   },
   {

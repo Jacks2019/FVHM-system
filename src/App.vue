@@ -60,10 +60,13 @@ import MapLoader from '@/pages/Map/localMap.js'
   position: fixed;
   top: 0;
   left: 0;
-  background: white;
+  background-color: #F4F4F4;
   width: 100%;
   z-index: 2000;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+.el-main{
+  background-color: #F8F8F8;
 }
 .scroll-out {
   height: calc(100vh - 80px);
@@ -73,5 +76,6 @@ import MapLoader from '@/pages/Map/localMap.js'
 
 .el-page-header {
   padding-bottom: 20px;
+
 }
 </style>
