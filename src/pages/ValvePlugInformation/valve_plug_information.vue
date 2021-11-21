@@ -19,6 +19,7 @@
       <el-button type="primary">导出</el-button>
       </div>
     </div>
+    <el-scrollbar>
     <div class="data-chart">
       <el-table
           :data=tableData
@@ -37,7 +38,7 @@
         <el-table-column label="计量设备型号" prop="countNum" width="200px"/>
         <el-table-column label="通讯编号" prop="callNum" width="200px"/>
         <el-table-column fixed="right" label="操作" width="360">
-          <template #default="scope">
+          <template >
             <el-button type="primary">详情</el-button>
             <el-button type="warning">停用</el-button>
             <el-button>修改</el-button>
@@ -46,6 +47,7 @@
         </el-table-column>
       </el-table>
     </div>
+    </el-scrollbar>
   </div>
 </template>
 <script setup>
@@ -57,7 +59,7 @@ let input = ref('')
 let tableData = ref([])
 onMounted(async () => {
   mountedToArrPrototype()
-  let res = await fetchVpinformation({ year: new Date().getFullYear() })
+  let res = await fetchVpinformation()
   if (res.code === '200') {
     tableData.value = res.data;
   }
@@ -68,7 +70,7 @@ onMounted(async () => {
 .p-page {
   width: 100%;
   height: calc(100vh - 120px);
-  overflow-y: hidden;
+  /* overflow-y: scroll; */
   overflow-x: hidden;
   margin: 0;
 }
