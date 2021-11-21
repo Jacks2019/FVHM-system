@@ -26,7 +26,7 @@
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :load="load"
       >
-        <el-table-column prop="name" label="道路名称" width="190"></el-table-column>
+        <el-table-column prop="name" label="道路名称" width="170"></el-table-column>
         <el-table-column prop="planVolume" label="阀门用水量(万m³)" min-width="200"></el-table-column>
         <el-table-column prop="licenseVolume" label="消防栓用水量(万m³)" min-width="200"></el-table-column>
         <el-table-column prop="totalVolume" label="总用水量(万m³)" min-width="200"></el-table-column>
@@ -48,9 +48,7 @@
 </template>
 
 <script setup>
-import { cloneDeep } from 'lodash'
 import { onMounted, ref } from 'vue'
-
 let searchTime=ref(new Date())
 let searchTimeType=ref('月')
 let data=ref([])
@@ -88,7 +86,6 @@ const load=async(tree, treeNode, resolve)=>{
   resolve([].concat(r1).concat(r2))
 }
 const search=async()=>{
-  const city=cloneDeep(store.state.util.city||[])
   data.value=[
         {
           id: 1,
