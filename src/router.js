@@ -1,10 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
+<<<<<<< HEAD
+import homepage from '@/pages/homepage.vue';
+import comprehensiveStatistics from '@/pages/comprehensiveStatistics.vue'
+import Example2 from '@/pages/example2.vue';
+import Example3 from '@/pages/example3.vue';
+import Example4 from '@/pages/example4.vue';
+import EditFunction from '@/pages/EditFunction.vue';
+import Manage from '@/pages/manage.vue';
+=======
 import homepage from '@/pages/homePage/homepage.vue';
 import MapContent from '@/pages/Map/mapcontent.vue';
 import MapDetail from '@/pages/Map/mapdetail.vue';
 import AlarmMgmt from '@/pages/AlarmMgmt/alarmMgmt.vue'
 import VPInformation from '@/pages/ValvePlugInformation/valve_plug_information.vue'
 import async from "async";
+>>>>>>> 78f7fd77edb5e7124c45c1a95608d2f95f6333b3
 
 
  const configs = [
@@ -117,6 +127,16 @@ import async from "async";
       }
     ]
   },
+<<<<<<< HEAD
+  {
+    path: '/comprehensive', 
+    label: '月度综合统计', 
+    name: 'comprehensiveStatistics', 
+    icon: 'el-icon-s-grid', 
+    component: comprehensiveStatistics 
+  }
+=======
+>>>>>>> 78f7fd77edb5e7124c45c1a95608d2f95f6333b3
 ];
 
 const generateRouterConfigsFunc = (res, configs, { rootPath = '' }) => {
