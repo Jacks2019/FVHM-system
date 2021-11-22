@@ -50,10 +50,41 @@
 <script setup>
 import { cloneDeep } from 'lodash'
 import { onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import {
+    fetchMonthCity,
+    fetchMonthArea,
+    fetchMonthTown,
+    fetchMonthDistrict,
+    fetchMonthVillage,
+    fetchMonthRoad
+  } from '../../apis/2.0/newMonth'
+
 
 let searchTime=ref(new Date())
 let searchTimeType=ref('月')
 let data=ref([])
+const store=useStore()
+
+const genTwoLengthNumberString = n => (n >= 10 ? n : '0' + n)
+  function dateTimeTrans(d) {
+    if (!d) {
+      return ''
+    }
+    let yy = d.getFullYear()
+    let MM = genTwoLengthNumberString(d.getMonth() + 1)
+    let dd = genTwoLengthNumberString(d.getDate())
+    if (searchTimeType.value === '日') {
+      return yy + '-' + MM + '-' + dd
+    }
+    if (searchTimeType.value === '月') {
+      return yy + '-' + MM
+    }
+    if (searchTimeType.value === '年') {
+      return yy
+    }
+  }
+
 const load=async(tree, treeNode, resolve)=>{
   let r1=[],r2=[]
   if(tree.id==2){
@@ -88,31 +119,26 @@ const load=async(tree, treeNode, resolve)=>{
   resolve([].concat(r1).concat(r2))
 }
 const search=async()=>{
-  const city=cloneDeep(store.state.util.city||[])
-  data.value=[
-        {
-          id: 1,
-          planVolume: '2016-05-02',
-          name: 'wangxiaohu2',
-        },
-        {
-          id: 2,
-          planVolume: '2016-05-04',
-          name: 'wangxiaohu4',
-          hasChildren: true ,
-        },
-        {
-          id: 3,
-          planVolume: '2016-05-01',
-          name: 'wangxiaohu1',
-          hasChildren: false ,
-        },
-        {
-          id: 4,
-          planVolume: '2016-05-03',
-          name: 'wangxiaohu3',
-        },
-      ]
+  const city=cloneDeep(store.state.utils.city||[])
+  const res= await fetchMonthCity({
+    month: dateTimeTrans(searchTime.value),
+    list: city.map(item=>{
+      return item.zoneId;
+    }),
+  })
+  
+      const n = Date.now()
+      const r = res.map((item, index) => {
+        return {
+          ...item,
+          ...city[index],
+          name: city[index].city,
+          hasChildren: true,
+          id: 'city' + city[index].zoneId + n,
+        }
+      })
+      data.value = r
+    
 }
 onMounted(async()=>{
   search()

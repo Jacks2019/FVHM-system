@@ -4,7 +4,7 @@ import { fetchDepartmentsByNone } from '../apis/3.0/department'
 import { getMeterTypes } from '../apis/3.0/meter'
 import { cloneDeep } from 'lodash'
 import { cityGenerator, countryGenerator, genList, idGenerator, rateGeneratorFactory } from '../mock'
-import { fixHeight } from '../utils/fixHeight'
+//import { fixHeight } from '../utils/fixHeight'
 import { init } from 'echarts'
 
 export const utils = {
