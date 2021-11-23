@@ -7,7 +7,6 @@ import Example5 from '@/pages/example5.vue';
 import MapContent from '@/pages/Map/mapcontent.vue';
 import MapDetail from '@/pages/Map/mapdetail.vue';
 import AlarmMgmt from '@/pages/AlarmMgmt/alarmMgmt.vue'
-import RoadMgmt from '@/pages/RoadMgmt/RoadMgmt.vue'
 import VPInformation from '@/pages/ValvePlugInformation/valve_plug_information.vue'
 import ValveDetail from '@/pages/ValvePlugInformation/valveDetail.vue'
 import async from "async";
@@ -111,7 +110,7 @@ import Manage from '@/pages/manage.vue';
     label: '道路管理',
     name: 'road_management',
     icon: '',
-    component: RoadMgmt
+    component:''
   },
   {
     path: '/system_management',
