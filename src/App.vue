@@ -73,7 +73,6 @@ import MapLoader from '@/pages/Map/localMap.js'
   width: 100%;
   overflow: hidden;
 }
-
 .el-page-header {
   padding-bottom: 20px;
 
