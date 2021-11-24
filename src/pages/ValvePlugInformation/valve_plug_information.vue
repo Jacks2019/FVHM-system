@@ -11,8 +11,8 @@
       </el-col>
       <div class="button">
       <el-button v-model="search" type="primary" @click="dataFind">查询</el-button>
-      <el-button type="info">重置</el-button>
-      <el-button type="success">添加</el-button>
+      <el-button type="info" @click="dataRequire">重置</el-button>
+      <el-button type="success" >添加</el-button>
       <el-button type="primary">导出</el-button>
       </div>
     </div>
@@ -48,8 +48,8 @@
 </template>
 <script setup>
 import {defineComponent, onMounted, ref} from 'vue'
-import { fetchVpinformation} from "./vpinformation";
-import { fetchFindData } from "./dataSearch";
+import { fetchVpinformation} from "./util/vpinformation";
+import { fetchFindData } from "./util/dataSearch";
 import {mountedToArrPrototype} from "../../mock";
 import AddrSelect from '@/pages/ValvePlugInformation/addrSelect.vue';
 import { types,statuss } from '@/utils/transform.js'
@@ -84,7 +84,10 @@ const dataRequire = async function(){
   }
 }
 onMounted(async () => {
-  await this.dataRequire();
+  let res = await fetchVpinformation()
+  if (res.code === '200') {
+    tableData.value = res.data;
+  }
 })
 
 </script>
