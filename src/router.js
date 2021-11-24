@@ -11,7 +11,7 @@ import VPInformation from '@/pages/ValvePlugInformation/valve_plug_information.v
 import async from "async";
 import EditFunction from '@/pages/EditFunction.vue';
 import Manage from '@/pages/manage.vue';
-
+import DistrictReport from '@/pages/statisticalReport/districtReport.vue';
 
 
  const configs = [
@@ -62,9 +62,9 @@ import Manage from '@/pages/manage.vue';
     component: comprehensiveStatistics
   },
   {
-    path: '/water_consumption_statistics',
+    path: '/water_consumption',
     label: '用水统计',
-    name: 'water_consumption_statistics',
+    name: 'water_consumption',
     icon: '',
     component: ""
   },
@@ -72,29 +72,8 @@ import Manage from '@/pages/manage.vue';
     path: '/water_consumption_statistics',
     label: '统计报表',
     name: 'water_consumption_statistics',
-    icon: '',
-    children: [
-      {
-        path:'/district',
-        label:'区县',
-        component: ""
-      },
-      {
-        path:'/township',
-        label:'乡镇',
-        component: ""
-      },
-      {
-        path:'/village',
-        label:'村庄',
-        component: ""
-      },
-      {
-        path:'/industrial_area',
-        label:'工业区',
-        component: ""
-      },
-    ]
+    icon: 'el-icon-s-data',
+    component: DistrictReport
   },
   {
     path: '/system_management',

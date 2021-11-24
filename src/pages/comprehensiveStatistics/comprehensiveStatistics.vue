@@ -17,38 +17,30 @@
       </div>
       </div>
       <div class="p-body">
+      <el-scrollbar>
       <el-table
         :data="data"
+        height="500"
         style="width: 100%"
         row-key="id"
+        :key="fresh"
         stripe
         lazy
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :load="load"
       >
-        <el-table-column prop="name" label="道路名称" width="190"></el-table-column>
-        <el-table-column prop="planVolume" label="阀门用水量(万m³)" min-width="200"></el-table-column>
-        <el-table-column prop="licenseVolume" label="消防栓用水量(万m³)" min-width="200"></el-table-column>
+        <el-table-column prop="name" label="行政区域" width="190"></el-table-column>
+        <el-table-column prop="valveVolume" label="阀门用水量(万m³)" min-width="200"></el-table-column>
+        <el-table-column prop="hydrantVolume" label="消防栓用水量(万m³)" min-width="200"></el-table-column>
         <el-table-column prop="totalVolume" label="总用水量(万m³)" min-width="200"></el-table-column>
       </el-table>
+      </el-scrollbar>
     </div>
-  </div>
-  <div class="p-bottom">
-    <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="page"
-      :page-sizes="[20, 50, 100]"
-      :page-size="num"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="allData.length"
-    >
-    </el-pagination> -->
   </div>
 </template>
 
 <script setup>
-import { cloneDeep } from 'lodash'
+
 import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import {
@@ -57,14 +49,21 @@ import {
     fetchMonthTown,
     fetchMonthDistrict,
     fetchMonthVillage,
-    fetchMonthRoad
+    fetchMonthRoad,
   } from '../../apis/2.0/newMonth'
+import {fetchCityList,
+        fetchAreaList,
+        fetchDistrictList,
+        fetchTownList,
+        fetchVillageList,
+        fetchRoadList,
+  } from '../../apis/2.0/addr'
 
 
 let searchTime=ref(new Date())
 let searchTimeType=ref('月')
 let data=ref([])
-const store=useStore()
+
 
 const genTwoLengthNumberString = n => (n >= 10 ? n : '0' + n)
   function dateTimeTrans(d) {
@@ -86,62 +85,156 @@ const genTwoLengthNumberString = n => (n >= 10 ? n : '0' + n)
   }
 
 const load=async(tree, treeNode, resolve)=>{
-  let r1=[],r2=[]
-  if(tree.id==2){
-    r1=[
-        {
-          id: 31,
-          planVolume: '2016-05-01',
-          name: 'wangxiaohu31',
-          hasChildren: true ,
-        },
-        {
-          id: 32,
-          planVolume: '2016-05-01',
-          name: 'wangxiaohu32',
-        },
-      ]
+  let r1=[],r2=[],r3=[],r4=[],r5=[]
+  let res
+  if(tree.type==='city'){
+    //工业区
+    const area= (await fetchAreaList()||[]).filter(item=>item.pid==tree.zoneId)
+    console.log("area: ",area)
+    res=(await fetchMonthArea({
+      month: dateTimeTrans(searchTime.value),
+      list: area.map(item=>{
+      return item.zoneId;
+    }),
+    }))
+    console.log("res: ",res)
+    r1=res.map((item, index) => {
+      return {
+        ...item,
+        zoneId: area[index].zoneId,
+        name: area[index].area,
+        hasChildren: false,
+        type: 'area',
+        id: 'area' + area[index].zoneId,
+      }
+    })
+    console.log("r1: ",r1)
+    //区县
+    const district= (await fetchDistrictList()||[]).filter(item=>item.pid==tree.zoneId)
+    console.log("district: ",district)
+    res=(await fetchMonthDistrict({
+      month: dateTimeTrans(searchTime.value),
+      list: district.map(item=>{
+      return item.zoneId;
+    }),
+    }))
+    console.log("res: ",res)
+    r2=res.map((item, index) => {
+      return {
+        ...item,
+        zoneId: district[index].zoneId,
+        name: district[index].district,
+        hasChildren: true,
+        type: 'district',
+        id: 'district' + district[index].zoneId,
+      }
+    })
+    console.log("r2: ",r2)
   }
-  if(tree.id==31){
-    r2=[
-        {
-          id: 33,
-          planVolume: '2016-05-01',
-          name: 'wangxiaohu33',
-        },
-        {
-          id: 34,
-          planVolume: '2016-05-01',
-          name: 'wangxiaohu34',
-        },
-      ]
+  if(tree.type=='district'){
+    //乡镇
+    const town= (await fetchTownList()||[]).filter(item=>item.pid==tree.zoneId)
+    console.log("town: ",town)
+    res=(await fetchMonthTown({
+      month: dateTimeTrans(searchTime.value),
+      list: town.map(item=>{
+      return item.zoneId;
+    }),
+    }))
+    console.log("res: ",res)
+    r3=res.map((item, index) => {
+      return {
+        ...item,
+        zoneId: town[index].zoneId,
+        name: town[index].town,
+        hasChildren: true,
+        type: 'town',
+        id: 'town' + town[index].zoneId,
+      }
+    })
+    console.log("r3: ",r3)
   }
-  resolve([].concat(r1).concat(r2))
+  if(tree.type=='town'){
+    //村庄
+    const village= (await fetchVillageList()||[]).filter(item=>item.pid==tree.zoneId)
+    console.log("village: ",village)
+    res=(await fetchMonthVillage({
+      month: dateTimeTrans(searchTime.value),
+      list: village.map(item=>{
+      return item.zoneId;
+    }),
+    }))
+    console.log("res: ",res)
+    r4=res.map((item, index) => {
+      return {
+        ...item,
+        zoneId: village[index].zoneId,
+        name: village[index].village,
+        hasChildren: true,
+        type: 'village',
+        id: 'village' + village[index].zoneId,
+      }
+    })
+    console.log("r4: ",r4)
+  }
+  if(tree.type=='village'){
+    //道路
+    const road= (await fetchRoadList()||[]).filter(item=>item.pid==tree.zoneId)
+    console.log("road: ",road)
+    res=(await fetchMonthRoad({
+      month: dateTimeTrans(searchTime.value),
+      list: road.map(item=>{
+      return item.zoneId;
+    }),
+    }))
+    console.log("res: ",res)
+    r5=res.map((item, index) => {
+      return {
+        ...item,
+        zoneId: road[index].zoneId,
+        name: road[index].road,
+        hasChildren: false,
+        type: 'road',
+        id: 'road' + road[index].zoneId,
+      }
+    })
+    console.log("r5: ",r5)
+  }
+  resolve([].concat(r1).concat(r2).concat(r3).concat(r4).concat(r5))
+  
 }
-const search=async()=>{
-  const city=cloneDeep(store.state.utils.city||[])
+
+async function search(){
+  
+  let city=[]
+  city= await fetchCityList()
+  console.log("city: ",city)
+  
   const res= await fetchMonthCity({
     month: dateTimeTrans(searchTime.value),
     list: city.map(item=>{
       return item.zoneId;
     }),
   })
-  
-      const n = Date.now()
-      const r = res.map((item, index) => {
-        return {
-          ...item,
-          ...city[index],
-          name: city[index].city,
-          hasChildren: true,
-          id: 'city' + city[index].zoneId + n,
-        }
-      })
-      data.value = r
+  console.log("res: ",res)
+  const n = Date.now()
+  const r = res.map((item, index) => {
+    return {
+      ...item,
+      zoneId:city[index].zoneId,
+      name: city[index].city,
+      hasChildren: true,
+      type: 'city',
+      id: 'city' + city[index].zoneId + n,
+    }
+  })
+  console.log("r: ",r)
+  data.value = r
     
 }
 onMounted(async()=>{
   search()
+  
 })
 </script>
 

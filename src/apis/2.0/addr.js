@@ -21,9 +21,13 @@ export const fetchDistrictInfo = async () => {
 export const fetchAreaInfo = async () => {
   return await request.Pget('/area/getarearelationship')
 }
-
+//list
 export const fetchDistrictList = async () => {
   return await request.Pget('/district/getdistrictinfo')
+}
+
+export const fetchCityList = async () => {
+  return await request.Pget('/city/getcityinfo')
 }
 
 export const fetchAreaList = async () => {
@@ -36,6 +40,10 @@ export const fetchTownList = async () => {
 
 export const fetchVillageList = async () => {
   return await request.Pget('/village/getvillageinfo')
+}
+
+export const fetchRoadList=async()=>{
+  return await request.Pget('/road/getroadinfo')
 }
 
 export const AddVillageInfoByConfig = async ({ townId, villageName, address }) => {

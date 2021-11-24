@@ -37,6 +37,7 @@ export const fetchMonthDistrict = async({ month, list })=>{
       })
 }
 
+
 export const fetchMonthVillage = async({ month, list })=>{
     return await request.Ppost('/monthreport/getvillageinfos', {
         params: {
@@ -54,3 +55,11 @@ export const fetchMonthRoad = async({ month, list })=>{
         data: list,
       })
 }
+
+// export const fetchTest = async({ num })=>{
+//   return await request.Pget('/valveinfo/findvalveinfosbyconditions', {
+//       params: {
+//         valveCode:num,
+//       },
+//     })
+// }
