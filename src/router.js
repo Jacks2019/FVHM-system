@@ -8,6 +8,7 @@ import MapContent from '@/pages/Map/mapcontent.vue';
 import MapDetail from '@/pages/Map/mapdetail.vue';
 import AlarmMgmt from '@/pages/AlarmMgmt/alarmMgmt.vue'
 import VPInformation from '@/pages/ValvePlugInformation/valve_plug_information.vue'
+import ValveDetail from '@/pages/ValvePlugInformation/valveDetail.vue'
 import async from "async";
 import EditFunction from '@/pages/EditFunction.vue';
 import Manage from '@/pages/manage.vue';
@@ -47,11 +48,19 @@ import DistrictReport from '@/pages/statisticalReport/districtReport.vue';
     icon: 'el-icon-document',
     component: VPInformation
   },
+   {
+     path: '/valve_plug_information/valveDetail',
+     label: '阀栓信息',
+     name: 'valveDetail',
+     icon: 'el-icon-document',
+     hide: true,
+     component: ValveDetail
+   },
   {
     path: '/alarm_management',
     label: '报警管理',
     name: 'alarm_management',
-    icon: '',
+    icon: 'el-icon-message-solid',
     component: AlarmMgmt
   },
   {
@@ -74,6 +83,13 @@ import DistrictReport from '@/pages/statisticalReport/districtReport.vue';
     name: 'water_consumption_statistics',
     icon: 'el-icon-s-data',
     component: DistrictReport
+  },
+  {
+    path: '/road_management',
+    label: '道路管理',
+    name: 'road_management',
+    icon: '',
+    component:''
   },
   {
     path: '/system_management',
