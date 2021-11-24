@@ -52,10 +52,7 @@ import MapLoader from '@/pages/Map/localMap.js'
   position: relative;
   box-sizing: border-box;
 }
-.whole-container{
-  height: 100%;
-  overflow-y: hidden;
-}
+
 .el-header {
   position: fixed;
   top: 0;
@@ -71,7 +68,6 @@ import MapLoader from '@/pages/Map/localMap.js'
 .scroll-out {
   height: calc(100vh - 80px);
   width: 100%;
-  overflow: hidden;
 }
 .el-page-header {
   padding-bottom: 20px;

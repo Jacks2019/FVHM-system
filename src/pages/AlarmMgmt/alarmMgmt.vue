@@ -22,8 +22,7 @@
         <el-button type="primary">导出</el-button>
       </div>
     </div>
-    <el-scrollbar>
-      <div class="data-chart2">
+    <el-scrollbar class="data-chart2">
         <el-table
             :data=tableData
             :header-cell-style="{background:'#EFF7FD', fontFamily:'Helvetica,Arial,sans-serif',fontSize:'17px',
@@ -48,12 +47,11 @@
             </template>
           </el-table-column>
         </el-table>
-      </div>
     </el-scrollbar>
   </div>
 </template>
 <script setup>
-import {defineComponent, onMounted, ref} from 'vue'
+import {defineComponent, onMounted, ref,toRefs,reactive} from 'vue'
 import { fetchAlarmManage } from "@/pages/AlarmMgmt/alarmManage.js";
 import {mountedToArrPrototype} from "../../mock";
 import AddrSelect from '@/pages/ValvePlugInformation/addrSelect.vue'
@@ -84,7 +82,7 @@ onMounted(async () => {
 .p-page2 {
   width: 100%;
   height: calc(100vh - 120px);
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   overflow-x: hidden;
   margin: 0;
 }
@@ -95,7 +93,9 @@ onMounted(async () => {
   height: 100px;
   border: 1px solid #219ded0f;
 }
-
+.drawer{
+  background-color: #969696;
+}
 .page2-name {
   font-size: 20px;
   font-weight: 700;
@@ -130,5 +130,6 @@ onMounted(async () => {
 .data-chart2 {
   position: relative;
   top: 10px;
+  overflow-y: hidden;
 }
 </style>

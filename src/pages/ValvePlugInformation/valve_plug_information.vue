@@ -10,13 +10,12 @@
       <el-input class="device-name" v-model="input2" placeholder="请输入阀栓名称"/>
       </el-col>
       <div class="button">
-      <el-button v-model="search" type="primary">查询</el-button>
+      <el-button v-model="search" type="primary" @click="dataFind">查询</el-button>
       <el-button type="info">重置</el-button>
       <el-button type="success">添加</el-button>
       <el-button type="primary">导出</el-button>
       </div>
     </div>
-    <div class="test">
     <el-scrollbar class="data-chart">
       <el-table
           :data=tableData
@@ -37,7 +36,7 @@
         <el-table-column label="通讯编号" prop="phone" width="200px"/>
         <el-table-column fixed="right" label="操作" width="360">
           <template #default="scope">
-            <el-button type="primary" @click="pageDetail">详情</el-button>
+            <valve-detail class="drawer"></valve-detail>
             <el-button type="warning">停用</el-button>
             <el-button>修改</el-button>
             <el-button type="danger">删除</el-button>
@@ -45,15 +44,16 @@
         </el-table-column>
       </el-table>
     </el-scrollbar>
-    </div>
   </div>
 </template>
 <script setup>
 import {defineComponent, onMounted, ref} from 'vue'
 import { fetchVpinformation} from "./vpinformation";
+import { fetchFindData } from "./dataSearch";
 import {mountedToArrPrototype} from "../../mock";
 import AddrSelect from '@/pages/ValvePlugInformation/addrSelect.vue';
 import { types,statuss } from '@/utils/transform.js'
+import ValveDetail from "@/pages/ValvePlugInformation/valveDetail.vue";
 import {router} from "../../router";
 
 let input1 = ref('')
@@ -69,23 +69,30 @@ const statusFormate = function (row){
   const targetStatus = statuss.find(i => i.value === row.status)
   return targetStatus.label;
 }
+/* 查询 */
+const dataFind = async function () {
+  let res = await fetchFindData(input1.value)
+  if (res.code === '200') {
+    tableData.value = res.data;
+  }
+}
 /* 获取阀栓信息 */
-onMounted(async () => {
-  mountedToArrPrototype()
+const dataRequire = async function(){
   let res = await fetchVpinformation()
   if (res.code === '200') {
     tableData.value = res.data;
   }
-})
-const pageDetail = function (){
-  router.replace('/valve_plug_information/valveDetail');
 }
+onMounted(async () => {
+  await this.dataRequire();
+})
+
 </script>
 <style>
 .p-page {
   width: 100%;
   height: calc(100vh - 120px);
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
   margin: 0;
 }
@@ -128,13 +135,11 @@ const pageDetail = function (){
   top: -37px;
   left: 950px;
 }
-.test{
-  overflow-x: scroll;
-}
+
 .data-chart {
   position: relative;
   top: 10px;
   always: true;
-  overflow-x: scroll;
+  overflow-y: hidden;
 }
 </style>
